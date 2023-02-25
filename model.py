@@ -1,3 +1,5 @@
+import datetime
+
 # модуль для записи новой заметки
 def add_task():
     data = ['id', 'Заголовок', 'Тело заметки', 'дата создания']
@@ -33,12 +35,15 @@ def find_task_id(task_id):
 
 def find_task_date(day, month, year):
     result_list = []
+
     with open('note_book.txt', 'r', encoding='utf-8') as data:
         for line in data:
             string_pars = line.split(sep=';')
             data_pars = string_pars[3].strip().split(sep=" ")
             if (data_pars[0].strip() == day) and (data_pars[1].strip() == month) and (data_pars[2].strip() == year):
                 result_list.append(line)
-                with open(f'{day}_{month}_{year}.txt', 'a', encoding='utf-8') as data:
+                with open(f'{day}_{month}_{year}_.txt', 'a', encoding='utf-8') as data:
                     data.write(line+"\n")
+        if len(result_list) == 0:
+            return f'заметки, сделанные {day} {month} {year} года в записной книжке отсутствуют'
         return result_list

@@ -1,6 +1,6 @@
 import model
 import view
-
+import datetime
 
 def klick_menu(number):
     if number == 4:  # функционал добавления новой заметки при нажатии кнопки 4
@@ -17,4 +17,7 @@ def klick_menu(number):
         find_month = input("Введите месяц: ")
         find_year = input("Введите год: ")
         result = model.find_task_date(find_day, find_month, find_year)
+        dtn = str(datetime.datetime.now())
+        with open(f'{find_day}_{find_month}_{find_year}_.txt', 'a', encoding='utf-8') as data:
+            data.write("\n" + " список заметок на указанную дату отображен " + f'{dtn}' + "\n")
         return view.output(result)
