@@ -47,3 +47,4 @@ def find_task_date(day, month, year):
         if len(result_list) == 0:
             return f'заметки, сделанные {day} {month} {year} года в записной книжке отсутствуют'
         return result_list
+
