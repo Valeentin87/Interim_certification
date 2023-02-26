@@ -1,5 +1,6 @@
 import datetime
 
+import color_text
 import view
 
 
@@ -8,7 +9,7 @@ def add_task():
     data = ['id', 'Заголовок', 'Тело заметки', 'дата создания']
     task = ['', '', '', '']
     for i in range(4):
-        task[i] = str(input(f'введите {data[i]} '))
+        task[i] = str(input(f'\t\t\t\033[34mвведите {data[i]} \033[0m'))
     new_task = ';'.join(task)
     with open('note_book.txt', 'a', encoding='utf-8') as file:
         file.write(new_task + "\n")
@@ -19,7 +20,7 @@ def add_task():
 def print_all_task():
     with open('note_book.txt', 'r', encoding="utf-8") as file:
         for line in file:
-            print(line, end='')
+            print("\t\t\t"+line, end='')
         print('\n---------------------------------------------------------------------------------')
 
 
@@ -30,7 +31,7 @@ def find_task_id(task_id):
             string_pars = line.split(sep=';')
             if str(task_id) == string_pars[0].strip():
                 return line.strip("\n")
-        result = f'заметка под номером {task_id} в записной книжке не числится'
+        result = f'\t\t\t\033[31mзаметка под номером {task_id} в записной книжке не числится\033[31m'
         return result
 
 
@@ -48,7 +49,7 @@ def find_task_date(day, month, year):
                 with open(f'{day}_{month}_{year}_.txt', 'a', encoding='utf-8') as data:
                     data.write(line + "\n")
         if len(result_list) == 0:
-            return f'заметки, сделанные {day} {month} {year} года в записной книжке отсутствуют'
+            return f'\t\t\t\033[31mзаметки, сделанные {day} {month} {year} года в записной книжке отсутствуют\033[0m'
         return result_list
 
 
@@ -63,17 +64,28 @@ def all_task_list():
 # модуль для удаления заметки по её номеру
 def edit_task(task_id):
     edite_task = find_task_id(task_id)
-    if edite_task == f'заметка под номером {task_id} в записной книжке не числится':
+    if edite_task == f'\t\t\tзаметка под номером {task_id} в записной книжке не числится':
         return edite_task
     new_task = edite_task
     new_task_pars = new_task.split(';')
-    new_task_pars[1] = input(f'Предыдущее значение заголовка: {new_task_pars[1]}, введите новое значение: ')
-    new_task_pars[2] = input(f'Предыдущее тело заметки: {new_task_pars[2]}, введите новое значение: ')
-    new_task_pars[3] = input(f'Предыдущее значение даты: {new_task_pars[3]}, введите дату изменения: ')
+    new_task_pars[1] = input(f'\t\t\tПредыдущее значение заголовка: {new_task_pars[1]}, введите новое значение: ')
+    new_task_pars[2] = input(f'\t\t\tПредыдущее тело заметки: {new_task_pars[2]}, введите новое значение: ')
+    new_task_pars[3] = input(f'\t\t\tПредыдущее значение даты: {new_task_pars[3]}, введите дату изменения: ')
     new_task = ';'.join(new_task_pars)
     result_task_list = list(set(all_task_list()) - {edite_task})
     result_task_list.append(new_task)
     with open('note_book.txt', 'w', encoding="utf-8") as file:
         for item in result_task_list:
             file.write(item + "\n")
-    return f'Заметка под номером {task_id} успешно отредактирована'
+    return f'\t\t\tЗаметка под номером {task_id} успешно отредактирована'
+
+def delete_task(task_id):
+    del_task = find_task_id(task_id)
+    if del_task == f'\t\t\tзаметка под номером {task_id} в записной книжке не числится':
+        return del_task
+
+    result_task_list = list(set(all_task_list()) - {del_task})
+    with open('note_book.txt', 'w', encoding="utf-8") as file:
+        for item in result_task_list:
+            file.write(item + "\n")
+    return f'\t\t\tЗаметка под номером {task_id} успешно удалена'
