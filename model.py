@@ -23,9 +23,10 @@ def add_task():
 
 # модуль для распечатывания всей записной книжки
 def print_all_task():
-    with open('note_book.txt', 'r', encoding="utf-8") as file:
-        for line in file:
-            print("\t\t\t"+line, end='')
+    with open('note_book.csv', encoding="utf-8") as r_file:
+        file_reader = csv.reader(r_file, delimiter=";")
+        for row in file_reader:
+            print(row)
         print('\n---------------------------------------------------------------------------------')
 
 
