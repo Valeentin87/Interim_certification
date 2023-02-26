@@ -11,7 +11,7 @@ def add_task():
         task[i] = str(input(f'введите {data[i]} '))
     new_task = ';'.join(task)
     with open('note_book.txt', 'a', encoding='utf-8') as file:
-        file.write('\n ' + new_task)
+        file.write(new_task + "\n")
     return new_task
 
 
@@ -29,7 +29,7 @@ def find_task_id(task_id):
         for line in data:
             string_pars = line.split(sep=';')
             if str(task_id) == string_pars[0].strip():
-                return line
+                return line.strip("\n")
         result = f'заметка под номером {task_id} в записной книжке не числится'
         return result
 
@@ -56,19 +56,24 @@ def all_task_list():
     all_task = []
     with open('note_book.txt', 'r', encoding="utf-8") as file:
         for line in file:
-            all_task.append(line)
+            all_task.append(line.strip("\n"))
     return all_task
 
 
-def delete_task(task_id):
-        del_task = find_task_id(task_id)
-        if del_task == f'заметка под номером {task_id} в записной книжке не числится':
-            return del_task
-        result_task_list = all_task_list().remove(del_task)
-        with open('note_book.txt', 'w', encoding="utf-8") as file:
-            for item in result_task_list:
-                file.write(item+"\n")
-        return f'Заметка под номером {task_id} успешно удалена'
-
-
-
+# модуль для удаления заметки по её номеру
+def edit_task(task_id):
+    edite_task = find_task_id(task_id)
+    if edite_task == f'заметка под номером {task_id} в записной книжке не числится':
+        return edite_task
+    new_task = edite_task
+    new_task_pars = new_task.split(';')
+    new_task_pars[1] = input(f'Предыдущее значение заголовка: {new_task_pars[1]}, введите новое значение: ')
+    new_task_pars[2] = input(f'Предыдущее тело заметки: {new_task_pars[2]}, введите новое значение: ')
+    new_task_pars[3] = input(f'Предыдущее значение даты: {new_task_pars[3]}, введите дату изменения: ')
+    new_task = ';'.join(new_task_pars)
+    result_task_list = list(set(all_task_list()) - {edite_task})
+    result_task_list.append(new_task)
+    with open('note_book.txt', 'w', encoding="utf-8") as file:
+        for item in result_task_list:
+            file.write(item + "\n")
+    return f'Заметка под номером {task_id} успешно отредактирована'

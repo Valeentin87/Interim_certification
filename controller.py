@@ -27,8 +27,10 @@ def klick_menu():
         elif number == 5:  # функционал удаление змаетки из записной книжки
             number_id = input("Введите номер заметки, которую необходимо удалить: ")
             return view.output(model.delete_task(number_id))
-
-        elif number == 6:  # функционал выхода из справочника
+        elif number == 6: # функционал редактирования заметки
+            number_id = input("Введите номер заметки, которую необходимо отредактировать: ")
+            return view.output(model.edit_task(number_id))
+        elif number == 7:  # функционал выхода из справочника
             return 0
 
 
