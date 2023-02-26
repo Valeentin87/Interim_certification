@@ -46,14 +46,15 @@ def find_task_id(task_id):
 def find_task_date(day, month, year):
     result_list = []
 
-    with open('note_book.txt', 'r', encoding='utf-8') as data:
-        for line in data:
-            string_pars = line.split(sep=';')
-            data_pars = string_pars[3].strip().split(sep=" ")
+    with open('note_book.csv', encoding='utf-8') as r_file:
+        file_reader = csv.reader(r_file, delimiter=";")
+        for row in file_reader:
+
+            data_pars = row[3].strip().split(sep=" ")
             if (data_pars[0].strip() == day) and (data_pars[1].strip() == month) and (data_pars[2].strip() == year):
-                result_list.append(line)
+                result_list.append(row)
                 with open(f'{day}_{month}_{year}_.txt', 'a', encoding='utf-8') as data:
-                    data.write(line + "\n")
+                    data.write(';'.join(row)+"\n")
         if len(result_list) == 0:
             return f'\t\t\t\033[31mзаметки, сделанные {day} {month} {year} года в записной книжке отсутствуют\033[0m'
         return result_list
