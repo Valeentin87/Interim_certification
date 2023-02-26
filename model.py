@@ -62,28 +62,31 @@ def find_task_date(day, month, year):
 
 def all_task_list():
     all_task = []
-    with open('note_book.txt', 'r', encoding="utf-8") as file:
-        for line in file:
-            all_task.append(line.strip("\n"))
+    with open('note_book.csv', encoding="utf-8") as r_file:
+        file_reader = csv.reader(r_file, delimiter=';')
+        for row in file_reader:
+            all_task.append(row)
     return all_task
 
 
-# модуль для удаления заметки по её номеру
+# модуль для редактирования заметки по её номеру
 def edit_task(task_id):
     edite_task = find_task_id(task_id)
     if edite_task == f'\t\t\tзаметка под номером {task_id} в записной книжке не числится':
         return edite_task
-    new_task = edite_task
-    new_task_pars = new_task.split(';')
-    new_task_pars[1] = input(f'\t\t\tПредыдущее значение заголовка: {new_task_pars[1]}, введите новое значение: ')
-    new_task_pars[2] = input(f'\t\t\tПредыдущее тело заметки: {new_task_pars[2]}, введите новое значение: ')
-    new_task_pars[3] = input(f'\t\t\tПредыдущее значение даты: {new_task_pars[3]}, введите дату изменения: ')
-    new_task = ';'.join(new_task_pars)
-    result_task_list = list(set(all_task_list()) - {edite_task})
-    result_task_list.append(new_task)
-    with open('note_book.txt', 'w', encoding="utf-8") as file:
-        for item in result_task_list:
-            file.write(item + "\n")
+    all_tasks = all_task_list()
+
+    for line in all_tasks:
+        if line[0] == task_id:
+            line[1] = input(f'\t\t\tПредыдущее значение заголовка: {line[1]}, введите новое значение: ')
+            line[2] = input(f'\t\t\tПредыдущее тело заметки: {line[2]}, введите новое значение: ')
+            line[3] = input(f'\t\t\tПредыдущее значение даты: {line[3]}, введите дату изменения: ')
+
+    with open('note_book_edit.csv', 'w', encoding='utf-8') as w_file:
+        file_writer = csv.writer(w_file, delimiter=';', lineterminator="\r")
+        for task in all_tasks:
+            file_writer.writerow(task)
+
     return f'\t\t\tЗаметка под номером {task_id} успешно отредактирована'
 
 def delete_task(task_id):
