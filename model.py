@@ -32,11 +32,11 @@ def print_all_task():
 
 # модуль для поиска заметки в записной книжке по её номеру
 def find_task_id(task_id):
-    with open('note_book.txt', 'r', encoding='utf-8') as data:
-        for line in data:
-            string_pars = line.split(sep=';')
-            if str(task_id) == string_pars[0].strip():
-                return line.strip("\n")
+    with open('note_book.csv', encoding="utf-8") as r_file:
+        file_reader = csv.reader(r_file, delimiter=";")
+        for row in file_reader:
+            if str(task_id) == row[0].strip():
+                return row
         result = f'\t\t\t\033[31mзаметка под номером {task_id} в записной книжке не числится\033[31m'
         return result
 
