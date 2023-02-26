@@ -24,8 +24,13 @@ def klick_menu():
             with open(f'{find_day}_{find_month}_{find_year}_.txt', 'a', encoding='utf-8') as data:
                 data.write("\n" + " список заметок на указанную дату отображен " + f'{dtn}' + "\n")
             return view.output(result)
-        elif number == 5:  # функционал выхода из справочника
+        elif number == 5:  # функционал удаление змаетки из записной книжки
+            number_id = input("Введите номер заметки, которую необходимо удалить: ")
+            return view.output(model.delete_task(number_id))
+
+        elif number == 6:  # функционал выхода из справочника
             return 0
+
 
 def run():
     while klick_menu() != 0:

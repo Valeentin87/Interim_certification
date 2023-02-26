@@ -1,5 +1,8 @@
 import datetime
 
+import view
+
+
 # модуль для записи новой заметки
 def add_task():
     data = ['id', 'Заголовок', 'Тело заметки', 'дата создания']
@@ -43,8 +46,29 @@ def find_task_date(day, month, year):
             if (data_pars[0].strip() == day) and (data_pars[1].strip() == month) and (data_pars[2].strip() == year):
                 result_list.append(line)
                 with open(f'{day}_{month}_{year}_.txt', 'a', encoding='utf-8') as data:
-                    data.write(line+"\n")
+                    data.write(line + "\n")
         if len(result_list) == 0:
             return f'заметки, сделанные {day} {month} {year} года в записной книжке отсутствуют'
         return result_list
+
+
+def all_task_list():
+    all_task = []
+    with open('note_book.txt', 'r', encoding="utf-8") as file:
+        for line in file:
+            all_task.append(line)
+    return all_task
+
+
+def delete_task(task_id):
+        del_task = find_task_id(task_id)
+        if del_task == f'заметка под номером {task_id} в записной книжке не числится':
+            return del_task
+        result_task_list = all_task_list().remove(del_task)
+        with open('note_book.txt', 'w', encoding="utf-8") as file:
+            for item in result_task_list:
+                file.write(item+"\n")
+        return f'Заметка под номером {task_id} успешно удалена'
+
+
 

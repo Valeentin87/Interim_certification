@@ -7,9 +7,10 @@ def menu():
         print('2. Найти интересующую запись по номеру')
         print('3. Отфильтровать все записи по интересующей дате')
         print('4. Добавить новую заметку в записную книжку')
-        print('5. Выход из записной книжки')
+        print('5. Удалить заметку')
+        print('6. Выход из записной книжки')
         number_menu = int(input('пункт меню =  '))
-        while (number_menu > 5 or number_menu < 1):
+        while (number_menu > 6 or number_menu < 1):
             print('введите корректное значение функции меню')
             number_menu = int(input('N = '))
         return number_menu
