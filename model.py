@@ -72,7 +72,7 @@ def all_task_list():
 # модуль для редактирования заметки по её номеру
 def edit_task(task_id):
     edite_task = find_task_id(task_id)
-    if edite_task == f'\t\t\tзаметка под номером {task_id} в записной книжке не числится':
+    if edite_task == f'\t\t\t\033[31mзаметка под номером {task_id} в записной книжке не числится\033[31m':
         return edite_task
     all_tasks = all_task_list()
 
@@ -82,7 +82,7 @@ def edit_task(task_id):
             line[2] = input(f'\t\t\tПредыдущее тело заметки: {line[2]}, введите новое значение: ')
             line[3] = input(f'\t\t\tПредыдущее значение даты: {line[3]}, введите дату изменения: ')
 
-    with open('note_book_edit.csv', 'w', encoding='utf-8') as w_file:
+    with open('note_book.csv', 'w', encoding='utf-8') as w_file:
         file_writer = csv.writer(w_file, delimiter=';', lineterminator="\r")
         for task in all_tasks:
             file_writer.writerow(task)
@@ -91,14 +91,14 @@ def edit_task(task_id):
 
 def delete_task(task_id):
     del_task = find_task_id(task_id)
-    if del_task == f'\t\t\tзаметка под номером {task_id} в записной книжке не числится':
+    if del_task == f'\t\t\t\033[31mзаметка под номером {task_id} в записной книжке не числится\033[31m':
         return del_task
     all_tasks = all_task_list()
     tasks_result = []
     for line in all_tasks:
         if line[0] != task_id:
             tasks_result.append(line)
-    with open('note_book_edit.csv', 'w', encoding='utf-8') as w_file:
+    with open('note_book.csv', 'w', encoding='utf-8') as w_file:
         file_writer = csv.writer(w_file, delimiter=';', lineterminator="\r")
         for task in tasks_result:
             file_writer.writerow(task)
