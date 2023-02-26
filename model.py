@@ -1,5 +1,5 @@
 import datetime
-
+import csv
 import color_text
 import view
 
@@ -10,9 +10,14 @@ def add_task():
     task = ['', '', '', '']
     for i in range(4):
         task[i] = str(input(f'\t\t\t\033[34mвведите {data[i]} \033[0m'))
+    with open('note_book.csv', 'a', encoding='utf-8') as w_file:
+        file_writer = csv.writer(w_file, delimiter=';', lineterminator="\r")
+        file_writer.writerow(task)
+
     new_task = ';'.join(task)
     with open('note_book.txt', 'a', encoding='utf-8') as file:
         file.write(new_task + "\n")
+
     return new_task
 
 
