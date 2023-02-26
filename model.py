@@ -93,9 +93,13 @@ def delete_task(task_id):
     del_task = find_task_id(task_id)
     if del_task == f'\t\t\tзаметка под номером {task_id} в записной книжке не числится':
         return del_task
-
-    result_task_list = list(set(all_task_list()) - {del_task})
-    with open('note_book.txt', 'w', encoding="utf-8") as file:
-        for item in result_task_list:
-            file.write(item + "\n")
+    all_tasks = all_task_list()
+    tasks_result = []
+    for line in all_tasks:
+        if line[0] != task_id:
+            tasks_result.append(line)
+    with open('note_book_edit.csv', 'w', encoding='utf-8') as w_file:
+        file_writer = csv.writer(w_file, delimiter=';', lineterminator="\r")
+        for task in tasks_result:
+            file_writer.writerow(task)
     return f'\t\t\tЗаметка под номером {task_id} успешно удалена'
