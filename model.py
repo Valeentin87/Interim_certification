@@ -1,5 +1,6 @@
 import datetime
 import csv
+import tabulate
 import color_text
 import view
 
@@ -68,6 +69,12 @@ def all_task_list():
             all_task.append(row)
     return all_task
 
+def view_tasks_tabulate():
+    tacks = all_task_list()
+    tacks.insert(0,['Номер заметки','Заголовок','Содержание заметки','Дата создания(изменения)'])
+    result = tabulate.tabulate(tacks)
+    return result
+
 
 # модуль для редактирования заметки по её номеру
 def edit_task(task_id):
@@ -78,9 +85,9 @@ def edit_task(task_id):
 
     for line in all_tasks:
         if line[0] == task_id:
-            line[1] = input(f'\t\t\tПредыдущее значение заголовка: {line[1]}, введите новое значение: ')
-            line[2] = input(f'\t\t\tПредыдущее тело заметки: {line[2]}, введите новое значение: ')
-            line[3] = input(f'\t\t\tПредыдущее значение даты: {line[3]}, введите дату изменения: ')
+            line[1] = input(f'\t\t\tПредыдущее значение заголовка: \033[31m{line[1]}\033[0m, введите новое значение: ')
+            line[2] = input(f'\t\t\tПредыдущее тело заметки: \033[31m{line[2]}\033[0m, введите новое значение: ')
+            line[3] = input(f'\t\t\tПредыдущее значение даты: \033[31m{line[3]}\033[0m, введите дату изменения: ')
 
     with open('note_book.csv', 'w', encoding='utf-8') as w_file:
         file_writer = csv.writer(w_file, delimiter=';', lineterminator="\r")

@@ -11,7 +11,7 @@ def klick_menu():
             g = model.add_task()
             return g
         elif number == 1:  # функционал распечатывания всей книжки при нажатии кнопки 1
-            return model.print_all_task()
+            return view.output(model.view_tasks_tabulate())
         elif number == 2:  # функционал поиска заметки по её номеру
             number_id = input("\t\t\t\033[34mВведите номер заметки, которую необходимо найти в записной книжке \033[0m")
             answer = model.find_task_id(number_id)
