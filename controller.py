@@ -41,4 +41,4 @@ def klick_menu():
 def run():
     while klick_menu() != 0:
         klick_menu()
-    return view.output("\t\t\tспасибо за работу c записной книжкой!!!")
+    return view.output("\t\t\t\t\t\t\t\tCпасибо за работу c записной книжкой!!!")
