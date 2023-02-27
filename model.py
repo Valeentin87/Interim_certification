@@ -14,12 +14,7 @@ def add_task():
     with open('note_book.csv', 'a', encoding='utf-8') as w_file:
         file_writer = csv.writer(w_file, delimiter=';', lineterminator="\r")
         file_writer.writerow(task)
-
-    new_task = ';'.join(task)
-    with open('note_book.txt', 'a', encoding='utf-8') as file:
-        file.write(new_task + "\n")
-
-    return new_task
+    return f'\t\t\t\t\t\t\t\t\t\tУспешно добавлена заметка под номером {task[0]}'
 
 
 # модуль для распечатывания всей записной книжки
@@ -38,7 +33,7 @@ def find_task_id(task_id):
         for row in file_reader:
             if str(task_id) == row[0].strip():
                 return row
-        result = f'\t\t\t\t\t\t\t\t033[31mзаметка под номером {task_id} в записной книжке не числится\033[31m'
+        result = f'\t\t\t\t\t\t\t\tзаметка под номером {task_id} в записной книжке не числится'
         return result
 
 
@@ -57,7 +52,7 @@ def find_task_date(day, month, year):
                 with open(f'{day}_{month}_{year}_.txt', 'a', encoding='utf-8') as data:
                     data.write(';'.join(row)+"\n")
         if len(result_list) == 0:
-            return f'\t\t\t\t\t\t\t\t033[31mзаметки, сделанные {day} {month} {year} года в записной книжке отсутствуют\033[0m'
+            return f'\t\t\t\t\t\t\t\tзаметки, сделанные {day} {month} {year} года в записной книжке отсутствуют'
         return result_list
 
 
@@ -79,7 +74,7 @@ def view_tasks_tabulate():
 # модуль для редактирования заметки по её номеру
 def edit_task(task_id):
     edite_task = find_task_id(task_id)
-    if edite_task == f'\t\t\t\t\t\t\t\t033[31mзаметка под номером {task_id} в записной книжке не числится\033[31m':
+    if edite_task == f'\t\t\t\t\t\t\t\tзаметка под номером {task_id} в записной книжке не числится':
         return edite_task
     all_tasks = all_task_list()
 
@@ -98,7 +93,7 @@ def edit_task(task_id):
 
 def delete_task(task_id):
     del_task = find_task_id(task_id)
-    if del_task == f'\t\t\t\t\t\t\t\t033[31mзаметка под номером {task_id} в записной книжке не числится\033[31m':
+    if del_task == f'\t\t\t\t\t\t\t\tзаметка под номером {task_id} в записной книжке не числится':
         return del_task
     all_tasks = all_task_list()
     tasks_result = []

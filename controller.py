@@ -9,7 +9,7 @@ def klick_menu():
         number = view.menu()
         if number == 4:  # функционал добавления новой заметки при нажатии кнопки 4
             g = model.add_task()
-            return g
+            return view.output(g)
         elif number == 1:  # функционал распечатывания всей книжки при нажатии кнопки 1
             return view.output(model.view_tasks_tabulate())
         elif number == 2:  # функционал поиска заметки по её номеру
